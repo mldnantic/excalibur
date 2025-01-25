@@ -151,7 +151,7 @@ fun MapScreen(
                                 {
                                     busMarkerViewModel.addOrUpdateBusMarker(
                                         userViewModel.currentUserModel.id,
-                                        userViewModel.currentUserModel.lastName,
+                                        userViewModel.currentUserModel.firstName,
                                         LocationService.latitude,
                                         LocationService.longitude
                                     )
