@@ -15,8 +15,35 @@ class BusMarkerStorageService(private val firestore: FirebaseFirestore){
         .dataObjects()
 
     suspend fun save(busMarkerModel: BusMarkerModel): String {
-        val updatedBusStop = busMarkerModel.copy()
-        return firestore.collection(BUSMARKERS_COLLECTION).add(updatedBusStop).await().id
+        val updatedBusMarker = busMarkerModel.copy()
+        return firestore.collection(BUSMARKERS_COLLECTION).add(updatedBusMarker).await().id
+    }
+
+    suspend fun get(busId: String): Boolean
+    {
+        val querySnapshot = firestore.collection(BUSMARKERS_COLLECTION)
+            .whereEqualTo("busId", busId)
+            .get()
+            .await()
+        return !querySnapshot.isEmpty
+    }
+
+    suspend fun update(busId: String,lat:Double,lng:Double)
+    {
+        val querySnapshot = firestore.collection(BUSMARKERS_COLLECTION)
+            .whereEqualTo("busId", busId)
+            .get()
+            .await()
+
+        if (!querySnapshot.isEmpty) {
+            val id = querySnapshot.documents.first().id
+            firestore.collection(BUSMARKERS_COLLECTION).document(id)
+                .update(mapOf(
+                    "lat" to lat,
+                    "lng" to lng
+                ))
+                .await()
+        }
     }
 
     suspend fun delete(busId: String) {

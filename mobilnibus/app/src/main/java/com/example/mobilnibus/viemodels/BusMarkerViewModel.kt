@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilnibus.model.BusMarkerModel
 import com.example.mobilnibus.model.BusStopModel
 import com.example.mobilnibus.storage.BusMarkerStorageService
@@ -36,6 +37,21 @@ class BusMarkerViewModel(private val storageService: BusMarkerStorageService): V
         }
     }
 
+    fun getBusMarker(busId: String): Boolean
+    {
+        var exists = false
+        viewModelScope.launch {
+            exists = storageService.get(busId)
+        }
+        return exists
+    }
+
+    fun updateBusMarker(busId:String,lat:Double,lng: Double)
+    {
+        viewModelScope.launch {
+            storageService.update(busId,lat,lng)
+        }
+    }
     fun deleteBusMarker(id:String)
     {
         viewModelScope.launch {
