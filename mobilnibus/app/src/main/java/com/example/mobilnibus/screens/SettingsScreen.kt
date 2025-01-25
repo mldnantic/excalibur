@@ -128,9 +128,7 @@ fun SettingsScreen(
                                     stopSvc()
                                     if(userViewModel.currentUserModel.role=="bus")
                                     {
-                                            busMarkerViewModel.deleteBusMarker(
-                                                userViewModel.currentUserModel.id
-                                            )
+                                            busMarkerViewModel.deleteBusMarker(userViewModel.currentUserModel.id)
                                     }
                                 })
                                 {

@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
         BusStopViewModelFactory(BusStopStorageService((application as MobilniBusApp).db))
     }
 
-    val busMarkerViewModel: BusMarkerViewModel by viewModels {
+    private val busMarkerViewModel: BusMarkerViewModel by viewModels {
         BusMarkerViewModelFactory(BusMarkerStorageService((application as MobilniBusApp).db))
     }
 

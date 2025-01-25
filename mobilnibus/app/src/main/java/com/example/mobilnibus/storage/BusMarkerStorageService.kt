@@ -20,9 +20,14 @@ class BusMarkerStorageService(private val firestore: FirebaseFirestore){
     }
 
     suspend fun delete(busId: String) {
-        val id =firestore.collection(BUSMARKERS_COLLECTION).whereEqualTo("busId", busId)
-            .get().await().first().id
-        firestore.collection(BUSMARKERS_COLLECTION).document(id).delete().await()
+        val querySnapshot = firestore.collection(BUSMARKERS_COLLECTION)
+            .whereEqualTo("busId", busId)
+            .get()
+            .await()
+        if (!querySnapshot.isEmpty) {
+            val id = querySnapshot.documents.first().id
+            firestore.collection(BUSMARKERS_COLLECTION).document(id).delete().await()
+        }
     }
 
     companion object {
