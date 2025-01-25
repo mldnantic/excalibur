@@ -1,6 +1,5 @@
 package com.example.mobilnibus.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,7 +28,6 @@ import com.example.mobilnibus.model.BusStopModel
 import com.example.mobilnibus.viemodels.BusMarkerViewModel
 import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
-import com.google.android.gms.location.Geofence
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -42,7 +40,6 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun MapScreen(
@@ -152,7 +149,7 @@ fun MapScreen(
                                   fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
                                 if(userViewModel.currentUserModel.role=="bus")
                                 {
-                                    busMarkerViewModel.addBusMarker(
+                                    busMarkerViewModel.addOrUpdateBusMarker(
                                         userViewModel.currentUserModel.id,
                                         userViewModel.currentUserModel.lastName,
                                         LocationService.latitude,

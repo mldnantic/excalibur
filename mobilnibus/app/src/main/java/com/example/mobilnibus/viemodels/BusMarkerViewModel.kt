@@ -6,9 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilnibus.model.BusMarkerModel
-import com.example.mobilnibus.model.BusStopModel
 import com.example.mobilnibus.storage.BusMarkerStorageService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -29,7 +27,7 @@ class BusMarkerViewModel(private val storageService: BusMarkerStorageService): V
         busMarker=BusMarkerModel()
     }
 
-    fun addBusMarker(busId:String,linija:String,lat:Double,lng:Double)
+    fun addOrUpdateBusMarker(busId:String, linija:String, lat:Double, lng:Double)
     {
         viewModelScope.launch {
             storageService.save(busId,linija,lat,lng)
