@@ -152,19 +152,12 @@ fun MapScreen(
                                   fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
                                 if(userViewModel.currentUserModel.role=="bus")
                                 {
-                                    if(busMarkerViewModel.getBusMarker(userViewModel.currentUserModel.id))
-                                    {
-                                        busMarkerViewModel.updateBusMarker(userViewModel.currentUserModel.id, LocationService.latitude, LocationService.longitude)
-                                    }
-                                    else
-                                    {
-                                        busMarkerViewModel.addBusMarker(
-                                            userViewModel.currentUserModel.id,
-                                            userViewModel.currentUserModel.lastName,
-                                            LocationService.latitude,
-                                            LocationService.longitude
-                                        )
-                                    }
+                                    busMarkerViewModel.addBusMarker(
+                                        userViewModel.currentUserModel.id,
+                                        userViewModel.currentUserModel.lastName,
+                                        LocationService.latitude,
+                                        LocationService.longitude
+                                    )
                                 }
                             }
                             else {

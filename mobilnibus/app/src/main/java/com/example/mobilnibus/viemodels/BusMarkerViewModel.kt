@@ -31,9 +31,8 @@ class BusMarkerViewModel(private val storageService: BusMarkerStorageService): V
 
     fun addBusMarker(busId:String,linija:String,lat:Double,lng:Double)
     {
-        val b = BusMarkerModel(busId=busId,linija=linija,lat=lat,lng=lng)
         viewModelScope.launch {
-            storageService.save(b)
+            storageService.save(busId,linija,lat,lng)
         }
     }
 
