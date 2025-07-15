@@ -153,14 +153,16 @@ fun MapScreen(
                                 if(userViewModel.currentUserModel.role=="bus")
                                 {
 
-                                    //startMarkerService()
-
                                     busMarkerViewModel.addOrUpdateBusMarker(
                                         userViewModel.currentUserModel.id,
                                         userViewModel.currentUserModel.firstName,
                                         LocationService.latitude,
                                         LocationService.longitude
                                     )
+
+                                    LocationService.busId = userViewModel.currentUserModel.id
+                                    LocationService.linija = userViewModel.currentUserModel.firstName
+                                    LocationService.activeMarker = !LocationService.activeMarker
                                 }
                             }
                             else {

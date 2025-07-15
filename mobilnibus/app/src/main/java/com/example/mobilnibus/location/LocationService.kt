@@ -66,8 +66,16 @@ class LocationService: Service() {
                 isActive=true
 
                 //Create/update bus marker
-
-
+                if (activeMarker) {
+                    val firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                    val busData = mapOf(
+                        "lat" to latitude,
+                        "lng" to longitude,
+                    )
+                    firestore.collection("busmarkers")
+                        .document(busId)
+                        .set(busData)
+                }
 
                 val updatedNotification = notification.setContentText(
                     "Location: ($lat,$lng)"
@@ -96,6 +104,9 @@ class LocationService: Service() {
         var latitude:Double=0.0
         var longitude:Double=0.0
         var isActive:Boolean=false
+        var busId:String = ""
+        var linija:String = ""
+        var activeMarker:Boolean=false
     }
 
 }
