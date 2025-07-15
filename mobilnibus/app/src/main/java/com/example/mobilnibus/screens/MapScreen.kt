@@ -47,10 +47,13 @@ fun MapScreen(
     userViewModel: UserViewModel,
     busStopViewModel: BusStopViewModel,
     navigateToSettings: () -> Unit,
-    navigateToViewBusStop: () ->Unit,
-    onMapLongClick:(LatLng) ->Unit,
+    navigateToViewBusStop: () -> Unit,
+    onMapLongClick: (LatLng) -> Unit,
     busMarkerViewModel: BusMarkerViewModel,
-    list: List<BusStopModel>)
+    list: List<BusStopModel>,
+    startMarkerService: () -> Unit,
+    stopMarkerService: () -> Unit
+)
 {
     val busMarkersList = busMarkerViewModel.busMarkers.collectAsState(initial = listOf())
 
@@ -149,6 +152,9 @@ fun MapScreen(
                                   fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
                                 if(userViewModel.currentUserModel.role=="bus")
                                 {
+
+                                    //startMarkerService()
+
                                     busMarkerViewModel.addOrUpdateBusMarker(
                                         userViewModel.currentUserModel.id,
                                         userViewModel.currentUserModel.firstName,

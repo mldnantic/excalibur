@@ -8,7 +8,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilnibus.viemodels.FormViewModel
 import com.example.mobilnibus.location.LocationService
+import com.example.mobilnibus.location.UpdateMarkerService
 import com.example.mobilnibus.screens.AddBusStopScreen
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
@@ -34,10 +34,6 @@ import com.example.mobilnibus.viemodels.BusStopViewModelFactory
 import com.example.mobilnibus.viemodels.EditBusStopViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
 import com.example.mobilnibus.viemodels.UserViewModelFactory
-import com.google.android.gms.location.Geofence
-import com.google.android.gms.location.GeofencingClient
-import com.google.android.gms.location.GeofencingRequest
-import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -72,6 +68,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun startMarkerService() {
+        startService(Intent(this,UpdateMarkerService::class.java))
+    }
+
+    private fun stopMarkerService() {
+        stopService(Intent(this,UpdateMarkerService::class.java))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -95,6 +99,12 @@ class MainActivity : ComponentActivity() {
                         },
                         svcStop = {
                             stopLocService()
+                        },
+                        markerSvcStart = {
+                            startMarkerService()
+                        },
+                        markerSvcStop = {
+                            stopMarkerService()
                         })
                 }
         }
@@ -128,7 +138,9 @@ fun MobilniBusApp(
     busStopViewModel: BusStopViewModel,
     busMarkerViewModel: BusMarkerViewModel,
     svcStart:()->Unit,
-    svcStop:()->Unit)
+    svcStop:()->Unit,
+    markerSvcStart:()->Unit,
+    markerSvcStop:()->Unit)
 {
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
@@ -154,7 +166,9 @@ fun MobilniBusApp(
                     editBusStopViewModel.setLatLng(latLng.latitude,latLng.longitude)
                     navController.navigate(Screens.AddBusStopScreen.name) },
                 busMarkerViewModel=busMarkerViewModel,
-                list = busStopsList.value)
+                list = busStopsList.value,
+                startMarkerService = {markerSvcStart()},
+                stopMarkerService = {markerSvcStop()})
         }
 
         composable(Screens.AddBusStopScreen.name)
