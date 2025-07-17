@@ -90,6 +90,7 @@ fun SettingsScreen(
                                     if (auth.currentUser != null) {
                                         if(userViewModel.currentUserModel.role=="bus")
                                         {
+                                            LocationService.activeMarker = false
                                             busMarkerViewModel.deleteBusMarker(userViewModel.currentUserModel.id)
                                         }
                                         userViewModel.resetCurrentUser()
