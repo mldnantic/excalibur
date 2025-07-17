@@ -50,9 +50,7 @@ fun MapScreen(
     navigateToViewBusStop: () -> Unit,
     onMapLongClick: (LatLng) -> Unit,
     busMarkerViewModel: BusMarkerViewModel,
-    list: List<BusStopModel>,
-    startMarkerService: () -> Unit,
-    stopMarkerService: () -> Unit
+    list: List<BusStopModel>
 )
 {
     val busMarkersList = busMarkerViewModel.busMarkers.collectAsState(initial = listOf())

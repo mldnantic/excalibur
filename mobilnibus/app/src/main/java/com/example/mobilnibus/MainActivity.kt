@@ -18,7 +18,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilnibus.viemodels.FormViewModel
 import com.example.mobilnibus.location.LocationService
-import com.example.mobilnibus.location.UpdateMarkerService
 import com.example.mobilnibus.screens.AddBusStopScreen
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
@@ -68,14 +67,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun startMarkerService() {
-        startService(Intent(this,UpdateMarkerService::class.java))
-    }
-
-    private fun stopMarkerService() {
-        stopService(Intent(this,UpdateMarkerService::class.java))
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -99,12 +90,6 @@ class MainActivity : ComponentActivity() {
                         },
                         svcStop = {
                             stopLocService()
-                        },
-                        markerSvcStart = {
-                            startMarkerService()
-                        },
-                        markerSvcStop = {
-                            stopMarkerService()
                         })
                 }
         }
@@ -138,9 +123,7 @@ fun MobilniBusApp(
     busStopViewModel: BusStopViewModel,
     busMarkerViewModel: BusMarkerViewModel,
     svcStart:()->Unit,
-    svcStop:()->Unit,
-    markerSvcStart:()->Unit,
-    markerSvcStop:()->Unit)
+    svcStop:()->Unit)
 {
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
@@ -166,9 +149,7 @@ fun MobilniBusApp(
                     editBusStopViewModel.setLatLng(latLng.latitude,latLng.longitude)
                     navController.navigate(Screens.AddBusStopScreen.name) },
                 busMarkerViewModel=busMarkerViewModel,
-                list = busStopsList.value,
-                startMarkerService = {markerSvcStart()},
-                stopMarkerService = {markerSvcStop()})
+                list = busStopsList.value)
         }
 
         composable(Screens.AddBusStopScreen.name)
