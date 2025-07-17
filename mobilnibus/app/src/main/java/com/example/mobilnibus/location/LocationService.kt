@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import com.example.mobilnibus.MainActivity
 import com.example.mobilnibus.R
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.CoroutineScope
@@ -74,7 +73,7 @@ class LocationService: Service() {
                     )
                     firestore.collection("busmarkers")
                         .document(busId)
-                        .set(busData)
+                        .update(busData)
                 }
 
                 val updatedNotification = notification.setContentText(

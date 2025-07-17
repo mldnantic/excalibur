@@ -1,5 +1,6 @@
 package com.example.mobilnibus.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.EditBusStopViewModel
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun AddBusStopScreen(editBusStopViewModel: EditBusStopViewModel = viewModel(),
                  busStopViewModel: BusStopViewModel,
@@ -42,7 +44,7 @@ fun AddBusStopScreen(editBusStopViewModel: EditBusStopViewModel = viewModel(),
                 fontWeight = FontWeight.Medium
             )
             Text(
-                text = editBusStopViewModel.lat.toString(),
+                text = String.format("%.6f", editBusStopViewModel.lat),
                 fontSize = 24.sp,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -54,7 +56,7 @@ fun AddBusStopScreen(editBusStopViewModel: EditBusStopViewModel = viewModel(),
                 fontWeight = FontWeight.Medium
             )
             Text(
-                text = editBusStopViewModel.lng.toString(),
+                text = String.format("%.6f", editBusStopViewModel.lng),
                 fontSize = 24.sp,
                 modifier = Modifier.padding(bottom = 8.dp)
             )

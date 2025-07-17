@@ -1,5 +1,6 @@
 package com.example.mobilnibus.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,6 +53,7 @@ fun ViewBusStopScreen(
     }
 }
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun BusStopCard(busStop: BusStopModel) {
     ElevatedCard(modifier = Modifier
@@ -64,12 +66,13 @@ fun BusStopCard(busStop: BusStopModel) {
                 fontSize = MaterialTheme.typography.headlineLarge.fontSize
             )
             Row(modifier = Modifier.padding(6.dp)) {
-                Text(text = "Latitude:")
-                Text(text = busStop.lat.toString())
+                Text(text = "Latitude: ")
+                Text(text = String.format("%.6f", busStop.lat))
             }
             Row(modifier = Modifier.padding(6.dp)) {
-                Text(text = "Longitude:")
-                Text(text = busStop.lng.toString())
+                Text(text = "Longitude: ")
+                Text(text = String.format("%.6f", busStop.lng))
+
             }
         }
 

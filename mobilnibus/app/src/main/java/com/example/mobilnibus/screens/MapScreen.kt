@@ -148,21 +148,33 @@ fun MapScreen(
                     ElevatedButton(
                         onClick = {
                             if(LocationService.isActive) {
+                                if(userViewModel.currentUserModel.role=="user")
+                                {
                                   cameraPositionState.position = CameraPosition.
                                   fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
+                                }
                                 if(userViewModel.currentUserModel.role=="bus")
                                 {
-
-                                    busMarkerViewModel.addOrUpdateBusMarker(
-                                        userViewModel.currentUserModel.id,
-                                        userViewModel.currentUserModel.firstName,
-                                        LocationService.latitude,
-                                        LocationService.longitude
-                                    )
-
-                                    LocationService.busId = userViewModel.currentUserModel.id
                                     LocationService.linija = userViewModel.currentUserModel.firstName
-                                    LocationService.activeMarker = !LocationService.activeMarker
+
+                                    if(!LocationService.activeMarker)
+                                    {
+                                        busMarkerViewModel.addOrUpdateBusMarker(
+                                            userViewModel.currentUserModel.id,
+                                            userViewModel.currentUserModel.firstName,
+                                            LocationService.latitude,
+                                            LocationService.longitude
+                                        )
+                                        LocationService.activeMarker = true
+                                        Toast.makeText(mainActivity, "Marker visible", Toast.LENGTH_SHORT).show()
+                                    }
+                                    else
+                                    {
+                                        busMarkerViewModel.deleteBusMarker(userViewModel.currentUserModel.id)
+                                        LocationService.activeMarker = false
+                                        Toast.makeText(mainActivity, "Marker hidden", Toast.LENGTH_SHORT).show()
+                                    }
+
                                 }
                             }
                             else {

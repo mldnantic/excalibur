@@ -88,6 +88,10 @@ fun SettingsScreen(
                                 {
                                     stopSvc()
                                     if (auth.currentUser != null) {
+                                        if(userViewModel.currentUserModel.role=="bus")
+                                        {
+                                            busMarkerViewModel.deleteBusMarker(userViewModel.currentUserModel.id)
+                                        }
                                         userViewModel.resetCurrentUser()
                                         auth.signOut()
                                         navigateToStart()
@@ -128,7 +132,8 @@ fun SettingsScreen(
                                     stopSvc()
                                     if(userViewModel.currentUserModel.role=="bus")
                                     {
-                                            busMarkerViewModel.deleteBusMarker(userViewModel.currentUserModel.id)
+                                        LocationService.activeMarker = false
+                                        busMarkerViewModel.deleteBusMarker(userViewModel.currentUserModel.id)
                                     }
                                 })
                                 {
