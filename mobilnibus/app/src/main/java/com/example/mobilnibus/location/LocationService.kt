@@ -21,6 +21,8 @@ class LocationService: Service() {
 
     private val serviceScope = CoroutineScope(SupervisorJob()+ Dispatchers.IO)
     private lateinit var locationClient: LocationClient
+    private val firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance()
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -66,7 +68,6 @@ class LocationService: Service() {
 
                 //Create/update bus marker
                 if (activeMarker) {
-                    val firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance()
                     val busData = mapOf(
                         "lat" to latitude,
                         "lng" to longitude,
